@@ -1,0 +1,77 @@
+<div class="container d-flex justify-content-center mt-3">
+  <div class="well container__content">
+    <h1>Visualizar Extrato</h1>
+
+    <form #formExtrato="ngForm">
+      <div class="form-group d-flex justify-content-evenly">
+
+        <div class="container">
+          <label for="dataInicial">Data inicial da consulta: </label>
+          <input type="text" class="form-control" id="dataInicial" name="dataInicial" minlength="2" required>
+        </div>
+
+        <div class="container">
+          <label for="dataFinal">Data final da consulta: </label>
+          <input type="text" class="form-control" id="dataFinal" name="dataFinal" minlength="2" required>
+        </div>
+
+        <button type="button" class="btn btn-primary" (click)="gerarExtrato()" [disabled]="!formExtrato.form.valid">
+          Buscar
+        </button>
+
+      </div>
+    </form>
+
+    <table class="table table-striped text-center mt-5">
+      <thead>
+        <th>Data/Hora</th>
+        <th>Operação</th>
+        <th>Cliente de Origem</th>
+        <th>Cliente de Destino</th>
+        <th>Valor</th>
+        <th>Saldo Consolidado</th>
+        
+        <tr *ngFor="let transacao of transacoes">
+          <div *ngIf="transacao.tipoTransacao === 'Transferência'; then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+            <div *ngIf="transacao.idCliente == cliente.id; then thenBlock else elseBlock"></div>
+            
+            <ng-template #thenBlock>
+              <td class="table-danger">{{ transacao.data }}</td>
+              <td class="table-danger">{{ transacao.tipoTransacao }}</td>
+              <td class="table-danger">{{ transacao.idCliente }}</td>
+              <td class="table-danger">{{ transacao.idClienteDestinatario }}</td>
+              <td class="table-danger">{{ transacao.valorTransacao | currency  }}</td>
+              <td class="table-danger">{{ transacao.saldo | currency  }}</td>
+            </ng-template>
+            
+            <ng-template #elseBlock>
+              <td class="table-info">{{ transacao.data }}</td>
+              <td class="table-info">{{ transacao.tipoTransacao }}</td>
+              <td class="table-info">{{ transacao.idCliente }}</td>
+              <td class="table-info">{{ transacao.idClienteDestinatario }}</td>
+              <td class="table-info">{{ transacao.valorTransacao | currency  }}</td>
+              <td class="table-info">{{ transacao.saldo | currency  }}</td>
+            </ng-template>
+          </ng-template>
+
+          <ng-template #elseBlock>
+            <td class="{{ transacao.color }}">{{ transacao.data }}</td>
+            <td class="{{ transacao.color }}">{{ transacao.tipoTransacao }}</td>
+            <td class="{{ transacao.color }}">{{ transacao.idCliente }}</td>
+            <td class="{{ transacao.color }}">{{ transacao.idClienteDestinatario }}</td>
+            <td class="{{ transacao.color }}">{{ transacao.valorTransacao | currency  }}</td>
+            <td class="{{ transacao.color }}">{{ transacao.saldo | currency  }}</td>
+          </ng-template>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="form-group mt-5 d-flex justify-content-center">
+      <a class="btn btn-secondary me-3" href="#" routerLink="/cliente">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+      </a>
+     
+    </div>
+  </div>
+</div>

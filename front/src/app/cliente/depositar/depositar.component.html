@@ -1,0 +1,30 @@
+<div class="container d-flex justify-content-center mt-3">
+  <div class="well container__content">
+    <h1>Realizar Depósito</h1>
+
+    <form #formDepositar="ngForm">
+      <p>Saldo atual: {{ conta.saldo | currency }}</p>
+
+      <p>Informe o valor do depósito:</p>
+
+      <div class="form-group">
+        <label for="valorTransacao">Valor: </label>
+        <input type="text" class="form-control mt-3 text-start" id="valorTransacao" name="valorTransacao" [(ngModel)]="transacao.valorTransacao" #valorTransacao="ngModel" currencyMask [options]="{prefix: 'R$ ', thousands: '.', decimal: ',' }" required />
+        <div *ngIf="valorTransacao.errors && (valorTransacao.dirty || valorTransacao.touched)" class="alert alert-danger">
+          <div [hidden]="!valorTransacao.errors?.['required']">Digite o salário.</div>
+        </div>
+      </div>
+      
+      <div class="mensagem-erro">{{ this.mensagem }}</div>
+
+      <div class="form-group mt-5 d-flex justify-content-center">
+        <a class="btn btn-secondary me-3" href="#" routerLink="/cliente">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+        </a>
+        <button type="button" class="btn btn-primary" (click)="depositar()" [disabled]="!formDepositar.form.valid">
+          <i class="fa fa-save" aria-hidden="true"></i> Confirmar Depósito
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "cargo": "ADMIN",
+      "email": "admin@ufpr.br",
+      "nome": "ADMIN",
+      "senha": "admin",
+      "id": 1
+    }
+  ],
+  "clientes": [],
+  "contas": [],
+  "gerentes": [],
+  "transacoes": []
+}

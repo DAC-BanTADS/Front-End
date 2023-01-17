@@ -1,0 +1,107 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "nome": "Letícia",
+      "email": "let",
+      "senha": "let",
+      "cargo": "GERENTE"
+    },
+    {
+      "nome": "Luis",
+      "email": "luis",
+      "senha": "1671054616742",
+      "cargo": "CLIENTE",
+      "id": 2
+    },
+    {
+      "nome": "Letícia Lima",
+      "email": "let",
+      "senha": "1671060632786",
+      "cargo": "CLIENTE",
+      "id": 3
+    }
+  ],
+  "clientes": [
+    {
+      "nome": "Luis",
+      "email": "luis",
+      "cpf": "14578965412",
+      "telefone": "41975469855",
+      "salario": "6000",
+      "rua": "Rua Número 1",
+      "numero": "2",
+      "cep": "87544985",
+      "cidade": "Curitiba",
+      "estado": "Paraná",
+      "id": 1
+    },
+    {
+      "nome": "Katiana",
+      "email": "kat",
+      "cpf": "45789654125",
+      "telefone": "41984575899",
+      "salario": "3000",
+      "rua": "Rua Número 2",
+      "numero": "1",
+      "cep": "47896587",
+      "cidade": "Curitiba",
+      "estado": "Paraná",
+      "id": 2
+    },
+    {
+      "nome": "Letícia Lima",
+      "email": "let",
+      "cpf": "07804233459",
+      "telefone": "41988887766",
+      "salario": "5000",
+      "rua": "Avenida",
+      "logradouro": "Comendador Franco",
+      "numero": "234",
+      "complemento": "Apto 122",
+      "cep": "89765678",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "id": 3
+    }
+  ],
+  "contas": [
+    {
+      "idCliente": 1,
+      "dataCriacao": "2022-12-11T20:04:11.339Z",
+      "limite": 1500,
+      "ativo": true,
+      "saldo": 198,
+      "idGerente": 1,
+      "id": 1
+    },
+    {
+      "idCliente": 2,
+      "dataCriacao": "2022-12-11T20:49:00.580Z",
+      "limite": 1500,
+      "ativo": false,
+      "saldo": 100,
+      "idGerente": 1,
+      "id": 2
+    },
+    {
+      "idCliente": 3,
+      "dataCriacao": "2022-12-14T23:30:11.802Z",
+      "limite": 2500,
+      "ativo": true,
+      "saldo": 116,
+      "idGerente": 1,
+      "id": 3
+    }
+  ],
+  "gerentes": [
+    {
+      "id": 1,
+      "nome": "Letícia",
+      "email": "let",
+      "cpf": "14578985647",
+      "telefone": "41987456258",
+      "numeroClientes": 1
+    }
+  ]
+}

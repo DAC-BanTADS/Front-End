@@ -1,0 +1,19 @@
+<div class="modal-body">
+  <div>
+    <p>Nome: {{ cliente.nome }}</p>
+    <p>Motivo:</p>
+    <textarea cols="54" rows="6"></textarea>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-danger" (click)="rejeitar()">
+    Rejeitar
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close()"
+  >
+    Fechar
+  </button>
+</div>

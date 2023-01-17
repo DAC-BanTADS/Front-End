@@ -1,0 +1,53 @@
+<div class="container d-flex justify-content-center mt-3">
+  <div class="well container__content">
+    <h1>Editar Gerente</h1>
+
+    <div class="well">
+      <form #gerenteForm="ngForm">
+
+        <div class="form-group">
+          <label for="nome">Nome: </label>
+          <input type="text" class="form-control" id="nome" name="nome" minlength="2" required
+            [(ngModel)]="gerente.nome" #nome="ngModel">
+          <div class="alert alert-danger" *ngIf="nome.errors && (nome.dirty && nome.touched)">
+            <p *ngIf="nome.errors!['minlength']">Nome inválido</p>
+          </div>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="cpf">Email: </label>
+          <input type="text" email class="form-control" id="email" name="email" minlength="2" required
+            [(ngModel)]="gerente.email" #email="ngModel">
+          <div class="alert alert-danger" *ngIf="email.errors && (email.dirty && email.touched)">
+            <p>Email inválido</p>
+          </div>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="cpf">CPF: </label>
+          <input disabled type="text" class="form-control" id="cpf" name="cpf" [(ngModel)]="gerente.cpf" #cpf="ngModel">
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="telefone">Telefone: </label>
+          <input type="text" class="form-control" id="telefone" name="telefone" minlength="8" required
+            [(ngModel)]="gerente.telefone" #telefone="ngModel" mask='(00) 00000-0000'>
+          <div class="alert alert-danger" *ngIf="telefone.errors && telefone.dirty">
+            <p *ngIf="telefone.errors!['minlength']">Telefone inválido</p>
+          </div>
+        </div>
+
+        <div class="form-group mt-5 d-flex justify-content-center">
+          <a class="btn btn-secondary me-3" [routerLink]="['/admin']">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+          </a>
+          <button type="button" class="btn btn-primary ms-3" (click)="atualizar()" [disabled]="!gerenteForm.form.valid">
+            <i class="fa fa-save" aria-hidden="true"></i> Alterar
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>

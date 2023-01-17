@@ -1,0 +1,48 @@
+<div class="container d-flex justify-content-center mt-3">
+  <div class="well container__content">
+    <h1>Admin</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Gerente</th>
+          <th scope="col">CPF</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">Total de cliente(s)</th>
+          <th scope="col">Total Saldo (+)</th>
+          <th scope="col">Total Saldo (-)</th>
+          <th scope="col"></th>
+          <th scope="col">
+            <button (click)="router.navigate(['/admin/gerentes/novo'])" type="button" class="btn btn-success">Novo
+              Gerente</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dto of data">
+          <td>{{ dto.gerente.id }}</td>
+          <td>{{ dto.gerente.nome }}</td>
+          <td>{{ dto.gerente.cpf }}</td>
+          <td>{{ dto.gerente.telefone! | phone }}</td>
+          <td>{{ dto.totalClientes }}</td>
+          <td>{{ dto.totalSaldoPositivo | currency: 'R$ ' }}</td>
+          <td>{{ dto.totalSaldoNegativo | currency: '- R$ '}}</td>
+          <td>
+            <button (click)="router.navigate(['/admin/gerentes/editar/'+dto.gerente.id])" type="button"
+              class="btn btn-warning">Editar</button>
+          </td>
+          <td>
+            <button (click)="removerGerente(dto.gerente)" type="button" class="btn btn-danger">Remover</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+        (pageChange)="refreshData()">
+      </ngb-pagination>
+
+    </div>
+  </div>
+</div>

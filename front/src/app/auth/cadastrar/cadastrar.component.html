@@ -1,0 +1,142 @@
+<div class="container d-flex justify-content-center mt-3">
+  <div class="well container__content">
+    <h1>Cadastrar</h1>
+    <form #formCadastrar="ngForm">
+      <div class="form-group d-flex justify-content-evenly">
+        <div class="container">
+          <label for="nome">Nome: </label>
+          <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="cliente.nome" #nome="ngModel"
+            minlength="2" required />
+          <div *ngIf="nome.errors && (nome.dirty || nome.touched)" class="alert alert-danger">
+            <div [hidden]="!nome.errors?.['required']">Digite o nome.</div>
+            <div [hidden]="!nome.errors?.['minlenght']">
+              O nome deve conter ao menos 2 caracteres.
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <label for="email">E-mail:</label>
+          <input type="text" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" #email="ngModel"
+            minlength="2" required />
+          <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+            <div [hidden]="!email.errors?.['required']">Digite o e-mail.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mt-3 d-flex justify-content-evenly">
+        <div class="container">
+          <label for="cpf">CPF: </label>
+          <input type="text" class="form-control" id="cpf" name="cpf" [(ngModel)]="cliente.cpf" #cpf="ngModel" mask='000.000.000-00' required />
+          <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
+            <div [hidden]="!cpf.errors?.['required']">Digite o CPF.</div>
+            <div [hidden]="!cpf.errors?.['minlenght']">
+              O cpf deve conter ao menos 11 caracteres.
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <label for="telefone">Telefone: </label>
+          <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="cliente.telefone"
+            #telefone="ngModel" minlength="11" required mask='(00) 00000-0000' />
+          <div *ngIf="telefone.errors && (telefone.dirty || telefone.touched)" class="alert alert-danger">
+            <div [hidden]="!telefone.errors?.['required']">
+              Digite o telefone.
+            </div>
+            <div [hidden]="!telefone.errors?.['minlenght']">
+              O telefone deve conter ao menos 11 caracteres.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mt-3 d-flex justify-content-evenly">
+        <div class="container">
+          <label for="salario">Salário: </label>
+          <input type="text" class="form-control text-start" id="salario" name="salario" [(ngModel)]="cliente.salario"
+            #salario="ngModel" currencyMask [options]="{prefix: 'R$ ', thousands: '.', decimal: ','}" required />
+          <div *ngIf="salario.errors && (salario.dirty || salario.touched)" class="alert alert-danger">
+            <div [hidden]="!nome.errors?.['required']">Digite o salário.</div>
+          </div>
+        </div>
+        <div class="container">
+          <label for="cep">CEP: </label>
+          <input type="text" class="form-control" id="cep" name="cep" [(ngModel)]="cliente.cep" #cep="ngModel" mask='00000-000' required />
+          <div *ngIf="cep.errors && (cep.dirty || cep.touched)" class="alert alert-danger">
+            <div [hidden]="!cep.errors?.['required']">Digite o CEP.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mt-3 d-flex justify-content-evenly">
+        <div class="container">
+          <label for="estado">Estado: </label>
+          <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="cliente.estado"
+            #estado="ngModel" minlength="2" required />
+          <div *ngIf="estado.errors && (estado.dirty || estado.touched)" class="alert alert-danger">
+            <div [hidden]="!estado.errors?.['required']">Digite o estado.</div>
+            <div [hidden]="!estado.errors?.['minlenght']">
+              O estado deve conter ao menos 2 caracteres.
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <label for="cidade">Cidade: </label>
+          <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="cliente.cidade"
+            #cidade="ngModel" minlength="2" required />
+          <div *ngIf="cidade.errors && (cidade.dirty || cidade.touched)" class="alert alert-danger">
+            <div [hidden]="!cidade.errors?.['required']">Digite a cidade.</div>
+            <div [hidden]="!cidade.errors?.['minlenght']">
+              A cidade deve conter ao menos 2 caracteres.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mt-3 d-flex justify-content-evenly">
+        <div class="container">
+          <label for="rua">Tipo: </label>
+          <input type="text" class="form-control" id="rua" name="rua" [(ngModel)]="cliente.rua" #rua="ngModel" minlength="2" placeholder="Avenida, Rua, Travessa..." required />
+          <div *ngIf="rua.errors && (rua.dirty || rua.touched)" class="alert alert-danger">
+            <div [hidden]="!rua.errors?.['required']">Digite o tipo do endereço (Avenida, Rua, Travessa...)</div>
+            <div [hidden]="!rua.errors?.['minlenght']">
+              O tipo deve conter ao menos 2 caracteres.
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <label for="logradouro">Logradouro: </label>
+          <input type="text" class="form-control" id="logradouro" name="logradouro" [(ngModel)]="cliente.logradouro"
+            #logradouro="ngModel" />
+        </div>        
+      </div>
+
+      <div class="form-group mt-3 d-flex justify-content-evenly">
+        <div class="container">
+          <label for="numero">Número: </label>
+          <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="cliente.numero" #numero="ngModel" required />
+          <div *ngIf="numero.errors && (numero.dirty || numero.touched)" class="alert alert-danger">
+            <div [hidden]="!numero.errors?.['required']">Digite o número.</div>
+          </div>
+        </div>
+        <div class="container">
+          <label for="complemento">Complemento: </label>
+          <input type="text" class="form-control" id="complemento" name="complemento" [(ngModel)]="cliente.complemento"
+            #complemento="ngModel" />
+        </div>
+      </div>
+
+      <div class="form-group mt-5 d-flex justify-content-center">
+        <a class="btn btn-secondary me-3" [routerLink]="['/login']">
+          <i aria-hidden="true"></i> Voltar
+        </a>
+        <a class="btn btn-primary me-3" (click)="cadastrar()">
+          <i aria-hidden="true"></i> Cadastrar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

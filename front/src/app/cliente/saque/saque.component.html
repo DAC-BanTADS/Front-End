@@ -1,0 +1,45 @@
+<div class="container d-flex justify-content-center mt-3">
+  <div class="well container__content">
+    <h1>Área de Saque do Cliente</h1>
+    <form #formSacar="ngForm">
+      <div class="d-flex justify-content-evenly">
+        <div class="container">
+          <p>Saldo atual: {{ conta.saldo | currency }}</p>
+        </div>
+      </div>
+
+      <div class="form-group d-flex justify-content-evenly">
+        <div class="container">
+          <label for="valorTransacao">Informe o valor a ser sacado:</label>
+          <input
+            type="text"
+            class="form-control text-start"
+            id="valorTransacao"
+            name="valorTransacao"
+            [(ngModel)]="transacao.valorTransacao"
+            #valorTransacao="ngModel"
+            currencyMask [options]="{prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            required
+          />
+          <div *ngIf="valorTransacao.errors && (valorTransacao.dirty || valorTransacao.touched)" class="alert alert-danger">
+            <div [hidden]="!valorTransacao.errors?.['required']">Digite o valor a ser sacado.</div>
+          </div>
+          
+          <div class="form-group mt-5 d-flex justify-content-center">
+            <a class="btn btn-secondary me-3" [routerLink]="['/cliente']">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+            </a>
+            <button
+              type="button"
+              class="btn btn-primary ms-3"
+              (click)="sacar()"
+              [disabled]="!formSacar.form.valid"
+            >
+              <i class="fa-dollar-sign" aria-hidden="true"></i> Sacar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="container d-flex justify-content-center mt-3">
+  <div class="well container__content">
+    <h1>Clientes</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Cliente(s)</th>
+          <th scope="col">CPF</th>
+          <th scope="col">Gerente</th>
+          <th scope="col">Limite</th>
+          <th scope="col">Saldo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Nome do cliente, CPF do cliente, Limite do cliente, Nome do gerente, Saldo do cliente. -->
+        <tr *ngFor="let cliente of data">
+          <td>{{ cliente.id }}</td>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.cpf }}</td>
+          <td>{{ cliente.gerente }}</td>
+          <td> {{ cliente.limite | currency: 'R$ ' }} </td>
+          <td> {{ cliente.saldo | currency: 'R$ ' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+        (pageChange)="refreshData()">
+      </ngb-pagination>
+
+    </div>
+  </div>
+</div>
