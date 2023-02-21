@@ -11,6 +11,14 @@ export class GerenteService {
 
   constructor(private http: HttpClient) {}
 
+  getClienteData() {
+    return this.http.get('http://localhost:8280/cliente');
+  }
+ 
+  getMelhores(gerente: Gerente) {
+    return this.http.put(`${this.url}/conta/melhores/${gerente.id}`, gerente).pipe(take(1));
+  }
+
   listarTodos() {
     return this.http.get<Gerente>(this.url).pipe(tap((res) => res));
   }
