@@ -9,7 +9,7 @@
       <form #formLogin="ngForm">
         <div class="form-group">
           <label for="usuario">Usuário:</label>
-          <input type="text" class="form-control" id="usuario" name="usuario" [(ngModel)]="login.login"
+          <input type="text" class="form-control" id="usuario" name="usuario" [(ngModel)]="login.email"
             #usuario="ngModel" required />
           <div *ngIf="usuario.errors && (usuario.dirty || usuario.touched)" class="alert alert-danger">
             <div [hidden]="!usuario.errors?.['required']">Digite o usuário</div>

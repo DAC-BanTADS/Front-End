@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -30,23 +30,14 @@ export class LoginComponent implements OnInit {
   logar(): void {
     this.loading = true;
     if (this.formLogin.form.valid) {
-      this.loginService.login().subscribe((usuarios) => {
-        if (usuarios != null) {
-          let usuario = Object.values(usuarios).find(
-            (usu) =>
-              usu.email === this.login.login && usu.senha === this.login.senha
-          );
-
-          if (usuario) {
-            this.loginService.usuarioLogado = usuario;
-            this.loading = false;
-            this.navegarParaAHome(usuario.cargo);
-          } else {
-            this.message = 'Usuário/Senha inválidos.';
-          }
-        } else {
-          this.message = 'Usuário/Senha inválidos.';
-        }
+      this.loginService.login(this.login).subscribe((login) => {
+        /*if (login.auth == true) {
+          this.loginService.usuarioLogado = usuario;
+          this.loading = false;
+          this.navegarParaAHome(usuario.cargo);
+        } else if (login.auth == false) {
+          this.message = login.massage;
+        }*/
       });
     }
     this.loading = false;

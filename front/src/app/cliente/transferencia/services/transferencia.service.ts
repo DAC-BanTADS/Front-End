@@ -9,14 +9,14 @@ const LS_CHAVE: string = 'transacoes';
   providedIn: 'root',
 })
 export class TransferenciaService {
-  private url: string = 'http://localhost:3000/transacoes';
+  private url: string = 'http://localhost:3000/transacao';
 
   constructor(private http: HttpClient) {}
 
   listarTodos() {
     return this.http.get<Transacao[]>(this.url).pipe(tap(res=>res));
   }
-
+  
   inserir(transacao: Transacao) {
     return this.http.post(this.url, transacao).pipe(take(1));
   }

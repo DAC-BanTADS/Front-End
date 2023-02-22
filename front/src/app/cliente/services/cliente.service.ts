@@ -7,7 +7,7 @@ import { Cliente } from 'src/app/shared';
   providedIn: 'root',
 })
 export class ClienteService {
-  private url: string = 'http://localhost:3000/clientes';
+  private url: string = 'http://localhost:3000/cliente';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,11 @@ export class ClienteService {
   }
 
   buscarPorEmail(email: string | undefined) {
-    return this.http.get<Cliente>(`${this.url}?email=${email}`).pipe(take(1));
+    return this.http.get<Cliente>(`${this.url}/email/${email}`).pipe(take(1));
+  }
+
+  buscarPorCpf(cpf: string | undefined) {
+    return this.http.get<Cliente>(`${this.url}/cpf/${cpf}`).pipe(take(1));
   }
 
   inserir(cliente: Cliente) {
@@ -33,9 +37,5 @@ export class ClienteService {
 
   remover(id: number | undefined) {
     return this.http.delete(`${this.url}/${id}`).pipe(take(1));
-  }
-
-  depositar(cliente: Cliente): void {
-    console.log('depositar');
   }
 }
