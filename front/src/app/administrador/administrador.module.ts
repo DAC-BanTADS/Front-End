@@ -16,13 +16,15 @@ import { EditarGerenteComponent } from './editar-gerente/editar-gerente.componen
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { RelatorioClientesComponent } from './relatorio-clientes/relatorio-clientes.component';
 
 @NgModule({
   declarations: [
     AdminDashComponent,
     ClienteDashComponent,
     InserirGerenteComponent,
-    EditarGerenteComponent
+    EditarGerenteComponent,
+    RelatorioClientesComponent
   ],
   providers: [AdminService, ClienteService, ContaService],
   imports: [CommonModule, FormsModule, RouterModule, SharedModule, NgbPaginationModule, NgbTypeaheadModule, NgbAccordionModule,  NgxMaskModule.forRoot(), CurrencyMaskModule]

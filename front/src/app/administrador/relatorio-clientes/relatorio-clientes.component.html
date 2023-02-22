@@ -1,0 +1,24 @@
+<div class="container d-flex justify-content-center mt-3">
+    <div class="well container__content">
+      <h1>Clientes</h1>
+      <table class="table table-striped table-bordered table-hover">
+        <tbody>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Limite</th>
+            <th>Gerente</th>
+            <th>Saldo</th>
+          </tr>
+          <tr *ngFor="let item of clienteData.content">
+            <td>{{ item.nome }}</td>
+            <td>{{ item.cpf! | cpf }}</td>
+            <td>{{ item.limite | currency }}</td>
+            <td>{{ item.nome }}</td>
+            <td>{{ item.saldo | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="clienteData.content.length == 0">Nenhum cliente cadastrado.</p>
+    </div>
+  </div>
