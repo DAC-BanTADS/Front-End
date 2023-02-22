@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { take, tap } from 'rxjs';
-import { Usuario } from 'src/app/shared';
+import { Login, Usuario } from 'src/app/shared';
 
 const LS_CHAVE: string = 'usuarioLogado';
+const LS_TOKEN: string = 'token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private url: string = 'http://localhost:3000/users';
+  private url: string = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
@@ -22,12 +23,21 @@ export class LoginService {
     localStorage[LS_CHAVE] = JSON.stringify(usuario);
   }
 
-  logout() {
-    delete localStorage[LS_CHAVE];
+  public get token(): any {
+    let token = localStorage[LS_TOKEN];
+    return token ? JSON.parse(localStorage[LS_TOKEN]) : null;
   }
 
-  login() {
-    return this.http.get(this.url).pipe(tap((res) => res));
+  public set token(tk: any) {
+    localStorage[LS_TOKEN] = JSON.stringify(tk);
+  }
+
+  login(login: Login) {
+    return this.http.post(this.url + "/login", login).pipe(tap((res) => res));
+  }
+
+  logout() {
+    delete localStorage[LS_CHAVE];
   }
 
   inserir(usuario: Usuario) {

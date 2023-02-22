@@ -1,20 +1,63 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GerenteService } from 'src/app/gerente/services/gerente.service';
-import { Conta } from 'src/app/shared';
+import { Conta, Gerente } from 'src/app/shared';
 import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContaService {
-  private url: string = 'http://localhost:3000/contas';
+  private url: string = 'http://localhost:3000/conta';
 
   constructor(
     private gerenteService: GerenteService,
     private http: HttpClient
   ) {}
 
+  buscarPorIdCliente(id: number | undefined) {
+    return this.http.get<Conta>(`${this.url}/cliente/${id}`).pipe(take(1));
+  }
+
+  buscarPorIdGerente(id: number | undefined) {
+    return this.http
+      .get<Conta[]>(`${this.url}/gerente/${id}`)
+      .pipe(take(1));
+  }
+
+  buscarPorIdGerenteAtivo(id: number | undefined) {
+    return this.http
+      .get<Conta[]>(`${this.url}/gerente/${id}&ativo=false`)
+      .pipe(take(1));
+  }
+
+  buscarPorId(id: number | undefined) {
+    return this.http.get<Conta>(`${this.url}/${id}`).pipe(take(1));
+  }
+  
+  buscarContaMelhoresPorIdGerente(gerente: Gerente) {
+    return this.http
+      .get<Conta[]>(`${this.url}/melhores/${gerente.id}`)
+      .pipe(take(1));
+  }
+
+  buscarSaquePorId(id: number | undefined) {
+    return this.http.get<Conta>(`${this.url}/saque/${id}`).pipe(take(1));
+  }
+
+  buscarDepositoPorId(id: number | undefined) {
+    return this.http.get<Conta>(`${this.url}/deposito/${id}`).pipe(take(1));
+  }
+
+  transferenciaEntreContas(id1: number | undefined, id2: number | undefined) {
+    return this.http.get<Conta>(`${this.url}/transferencia?idOrigem=${id1}&idDestino=${id2}`).pipe(take(1));
+  }
+
+
+
+
+  
+  // apagar esse depois de arrumar o autenticacao
   criarConta(conta: Conta) {
     // busca o gerente que tem menos clientes
     this.gerenteService.listarTodos().subscribe((res) => {
@@ -39,26 +82,6 @@ export class ContaService {
     return this.http.post(this.url, conta).pipe(take(1));
   }
 
-  buscarPorIdCliente(id: number | undefined) {
-    return this.http.get<Conta>(`${this.url}?idCliente=${id}`).pipe(take(1));
-  }
-
-  buscarPorIdGerente(id: number | undefined) {
-    return this.http
-      .get<Conta[]>(`${this.url}?idGerente=${id}&ativo=false`)
-      .pipe(take(1));
-  }
-
-  buscarPorIdGerenteTodos(id: number | undefined) {
-    return this.http
-      .get<Conta[]>(`${this.url}?idGerente=${id}`)
-      .pipe(take(1));
-  }
-
-  buscarPorId(id: number | undefined) {
-    return this.http.get<Conta>(`${this.url}?id=${id}`).pipe(take(1));
-  }
-  
   alterar(conta: Conta) {
     return this.http.put(`${this.url}/${conta.id}`, conta).pipe(take(1));
   }

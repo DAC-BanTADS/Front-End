@@ -14,6 +14,7 @@ import { GerenteService } from '../services';
 })
 export class HomeComponent implements OnInit {
   clientes: Cliente[] = [];
+  public clienteData: any;
 
   constructor(
     private clienteService: ClienteService,
@@ -24,6 +25,11 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.gerenteService.getClienteData().subscribe( (res: any) => {
+        this.clienteData = res;
+      }
+    )
+    
     this.gerenteService
       .buscarPorEmail(this.loginService.usuarioLogado.email)
       .subscribe((res) => {
@@ -39,6 +45,8 @@ export class HomeComponent implements OnInit {
           });
         });
       });
+
+     
   }
 
   aprovar($event: any, cliente: Cliente) {
