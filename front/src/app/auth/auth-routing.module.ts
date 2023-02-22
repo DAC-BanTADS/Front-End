@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CadastrarComponent } from './cadastrar/cadastrar.component';
-import { RelatorioClientesComponent } from '../administrador/relatorio-clientes/relatorio-clientes.component';
 
 export const LoginRoutes: Routes = [
   {
     path: 'login',
-    component: RelatorioClientesComponent,
+    component: LoginComponent,
   },
   {
     path: 'cadastrar',
