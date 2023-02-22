@@ -16,6 +16,8 @@ export class AdminService {
 
   private gerenteHost: string = 'http://localhost:3000/gerentes';
   private userHost: string = 'http://localhost:3000/users';
+  private urlCliente: string = 'http://localhost:8280'; // com o 3000 dava 401 Unauthorized
+  private urlConta: string = 'http://localhost:8480';
 
   constructor(
     private http: HttpClient,
@@ -137,4 +139,11 @@ export class AdminService {
     return objservableClienteDash
   }
 
+  getClienteData() {
+    return this.http.get(`${this.urlCliente}/cliente`);
+  }
+
+  getContaData() {
+    return this.http.get(`${this.urlConta}/conta/cliente/6cd3ce01-bef9-4162-b655-2e1c6272ae32`);
+  }
 }
