@@ -1,62 +1,81 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GerenteService } from 'src/app/gerente/services/gerente.service';
 import { Conta, Gerente } from 'src/app/shared';
 import { take } from 'rxjs';
+import { LoginService } from 'src/app/auth/services/login.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContaService {
   private url: string = 'http://localhost:3000/conta';
+  private headers: HttpHeaders = new HttpHeaders().set(
+    'x-access-token',
+    this.loginService.token
+  );
 
   constructor(
     private gerenteService: GerenteService,
-    private http: HttpClient
+    private http: HttpClient,
+    private loginService: LoginService
   ) {}
 
   buscarPorIdCliente(id: number | undefined) {
-    return this.http.get<Conta>(`${this.url}/cliente/${id}`).pipe(take(1));
+    return this.http
+      .get<Conta>(`${this.url}/cliente/${id}`, { headers: this.headers })
+      .pipe(take(1));
   }
 
   buscarPorIdGerente(id: number | undefined) {
     return this.http
-      .get<Conta[]>(`${this.url}/gerente/${id}`)
+      .get<Conta[]>(`${this.url}/gerente/${id}`, { headers: this.headers })
       .pipe(take(1));
   }
 
   buscarPorIdGerenteAtivo(id: number | undefined) {
     return this.http
-      .get<Conta[]>(`${this.url}/gerente/${id}&ativo=false`)
+      .get<Conta[]>(`${this.url}/gerente/${id}&ativo=false`, {
+        headers: this.headers,
+      })
       .pipe(take(1));
   }
 
   buscarPorId(id: number | undefined) {
-    return this.http.get<Conta>(`${this.url}/${id}`).pipe(take(1));
+    return this.http
+      .get<Conta>(`${this.url}/${id}`, { headers: this.headers })
+      .pipe(take(1));
   }
-  
+
   buscarContaMelhoresPorIdGerente(gerente: Gerente) {
     return this.http
-      .get<Conta[]>(`${this.url}/melhores/${gerente.id}`)
+      .get<Conta[]>(`${this.url}/melhores/${gerente.id}`, {
+        headers: this.headers,
+      })
       .pipe(take(1));
   }
 
   buscarSaquePorId(id: number | undefined) {
-    return this.http.get<Conta>(`${this.url}/saque/${id}`).pipe(take(1));
+    return this.http
+      .get<Conta>(`${this.url}/saque/${id}`, { headers: this.headers })
+      .pipe(take(1));
   }
 
   buscarDepositoPorId(id: number | undefined) {
-    return this.http.get<Conta>(`${this.url}/deposito/${id}`).pipe(take(1));
+    return this.http
+      .get<Conta>(`${this.url}/deposito/${id}`, { headers: this.headers })
+      .pipe(take(1));
   }
 
   transferenciaEntreContas(id1: number | undefined, id2: number | undefined) {
-    return this.http.get<Conta>(`${this.url}/transferencia?idOrigem=${id1}&idDestino=${id2}`).pipe(take(1));
+    return this.http
+      .get<Conta>(
+        `${this.url}/transferencia?idOrigem=${id1}&idDestino=${id2}`,
+        { headers: this.headers }
+      )
+      .pipe(take(1));
   }
 
-
-
-
-  
   // apagar esse depois de arrumar o autenticacao
   criarConta(conta: Conta) {
     // busca o gerente que tem menos clientes
@@ -79,14 +98,20 @@ export class ContaService {
   }
 
   inserir(conta: Conta) {
-    return this.http.post(this.url, conta).pipe(take(1));
+    return this.http
+      .post(this.url, conta, { headers: this.headers })
+      .pipe(take(1));
   }
 
   alterar(conta: Conta) {
-    return this.http.put(`${this.url}/${conta.id}`, conta).pipe(take(1));
+    return this.http
+      .put(`${this.url}/${conta.id}`, conta, { headers: this.headers })
+      .pipe(take(1));
   }
 
   remover(id: number | undefined) {
-    return this.http.delete(`${this.url}/${id}`).pipe(take(1));
+    return this.http
+      .delete(`${this.url}/${id}`, { headers: this.headers })
+      .pipe(take(1));
   }
 }

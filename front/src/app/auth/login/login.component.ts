@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit {
           const user: Usuario = response;
 
           this.loginService.usuarioLogado = user;
+          this.loginService.token = token;
+
           this.loading = false;
           this.navegarParaAHome(user.cargo);
         } else {
