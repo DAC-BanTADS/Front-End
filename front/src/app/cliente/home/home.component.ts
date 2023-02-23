@@ -30,11 +30,11 @@ export class HomeComponent implements OnInit {
     this.clienteService
       .buscarPorEmail(this.loginService.usuarioLogado.email)
       .subscribe((cliente) => {
-        cliente = this.tratarRespostaSubscribe(cliente);
+        cliente = cliente;
         this.cliente = cliente;
 
         this.contaService.buscarPorIdCliente(cliente.id).subscribe((conta) => {
-          conta = this.tratarRespostaSubscribe(conta);
+          conta = conta;
           this.conta = conta;
 
           this.gerenteService
@@ -44,14 +44,5 @@ export class HomeComponent implements OnInit {
             });
         });
       });
-  }
-
-  
-  tratarRespostaSubscribe(res: any) {
-    res = Object.values(res).reduce((a, b) => {
-      return a;
-    });
-
-    return res;
   }
 }

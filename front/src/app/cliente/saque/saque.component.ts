@@ -16,7 +16,7 @@ import { TransferenciaService } from '../transferencia/services/transferencia.se
 })
 export class SaqueComponent implements OnInit {
   @ViewChild('formSacar') formSacar!: NgForm;
-  transacao: Transacao = new Transacao();;
+  transacao: Transacao = new Transacao();
   cliente!: Cliente;
   conta: Conta = new Conta();
   mensagem: string = '';
@@ -27,32 +27,27 @@ export class SaqueComponent implements OnInit {
     private contaService: ContaService,
     private transferenciaService: TransferenciaService,
     private modalService: NgbModal
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.clienteService
       .buscarPorEmail(this.loginService.usuarioLogado.email)
       .subscribe((cliente) => {
         if (cliente) {
-          cliente = this.tratarRespostaSubscribe(cliente);
           this.cliente = cliente;
 
-          this.contaService.buscarPorIdCliente(this.cliente.id).subscribe((conta) => {
-            this.conta = this.tratarRespostaSubscribe(conta);
-          })
+          this.contaService
+            .buscarPorIdCliente(this.cliente.id)
+            .subscribe((conta) => {
+              this.conta = conta;
+            });
         } else {
-          throw new Error('Cliente não encontrado: email = '
-            + this.loginService.usuarioLogado.email);
+          throw new Error(
+            'Cliente não encontrado: email = ' +
+              this.loginService.usuarioLogado.email
+          );
         }
       });
-  }
-
-  tratarRespostaSubscribe(res: any) {
-    res = Object.values(res).reduce((a, b) => {
-      return a;
-    });
-
-    return res;
   }
 
   abrirModalSucesso() {
@@ -66,24 +61,28 @@ export class SaqueComponent implements OnInit {
   sacar(): void {
     if (this.formSacar.form.valid) {
       // cod sacar
-      let diff = (this.conta.saldo + this.cliente.salario / 2) - Number(this.transacao.valorTransacao);
+      let diff =
+        this.conta.saldo +
+        this.cliente.salario / 2 -
+        Number(this.transacao.valorTransacao);
 
-      if (diff >= 0 ) {
-        this.conta.saldo -= Number(this.transacao.valorTransacao)
-        this.contaService.alterar(this.conta).subscribe((res) => res)
+      if (diff >= 0) {
+        this.conta.saldo -= Number(this.transacao.valorTransacao);
+        this.contaService.alterar(this.conta).subscribe((res) => res);
 
         this.transacao.idCliente = this.cliente.id;
-        this.transacao.tipoTransacao = "Saque";
+        this.transacao.tipoTransacao = 'Saque';
         this.transacao.saldo = this.conta.saldo;
         this.transacao.data = new Date().getTime();
         this.transacao.idClienteDestinatario = this.cliente.id;
-        this.transacao.color = 'table-danger'
-        
-        this.transferenciaService.inserir(this.transacao).subscribe((res) => res);
+        this.transacao.color = 'table-danger';
+
+        this.transferenciaService
+          .inserir(this.transacao)
+          .subscribe((res) => res);
 
         this.abrirModalSucesso();
-      }
-      else{
+      } else {
         this.abrirModalErro();
       }
     } else {

@@ -28,23 +28,15 @@ export class AlterarComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
 
     this.clienteService
-    .buscarPorEmail(this.loginService.usuarioLogado.email)
-    .subscribe((cliente) => {
-      if (cliente) {
-        cliente = this.tratarRespostaSubscribe(cliente);
-        this.cliente = cliente;
-      } else {
-        throw new Error('Cliente não encontrado: id = ' + id);
-      }
-    });
-  }
-
-  tratarRespostaSubscribe(res: any) {
-    res = Object.values(res).reduce((a, b) => {
-      return a;
-    });
-
-    return res;
+      .buscarPorEmail(this.loginService.usuarioLogado.email)
+      .subscribe((cliente) => {
+        if (cliente) {
+          cliente = cliente;
+          this.cliente = cliente;
+        } else {
+          throw new Error('Cliente não encontrado: id = ' + id);
+        }
+      });
   }
 
   alterar(): void {

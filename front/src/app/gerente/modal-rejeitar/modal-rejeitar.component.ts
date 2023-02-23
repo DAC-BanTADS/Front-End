@@ -25,10 +25,6 @@ export class ModalRejeitarComponent implements OnInit {
   rejeitar() {
     // deletar a conta
     this.contaService.buscarPorIdCliente(this.cliente.id).subscribe((res) => {
-      res = Object.values(res).reduce((a, b) => {
-        return a;
-      });
-
       this.gerenteService.buscarPorId(res.idGerente).subscribe((res) => {
         res.numeroClientes!--;
         this.gerenteService.alterar(res).subscribe((res) => res);

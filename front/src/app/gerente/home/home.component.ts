@@ -25,18 +25,13 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.gerenteService.getClienteData().subscribe( (res: any) => {
-        this.clienteData = res;
-      }
-    )
-    
+    this.gerenteService.getClienteData().subscribe((res: any) => {
+      this.clienteData = res;
+    });
+
     this.gerenteService
       .buscarPorEmail(this.loginService.usuarioLogado.email)
       .subscribe((res) => {
-        res = Object.values(res).reduce((a, b) => {
-          return a;
-        });
-
         this.contaService.buscarPorIdGerente(res.id).subscribe((res) => {
           res.map((res) => {
             this.clienteService.buscarPorId(res.idCliente).subscribe((res) => {
@@ -45,8 +40,6 @@ export class HomeComponent implements OnInit {
           });
         });
       });
-
-     
   }
 
   aprovar($event: any, cliente: Cliente) {
@@ -63,10 +56,6 @@ export class HomeComponent implements OnInit {
       this.loginService.inserir(usuario).subscribe((res) => res);
 
       this.contaService.buscarPorIdCliente(cliente.id).subscribe((res) => {
-        res = Object.values(res).reduce((a, b) => {
-          return a;
-        });
-
         res.ativo = true;
 
         this.contaService.alterar(res).subscribe((res) => res);

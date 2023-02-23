@@ -24,26 +24,7 @@ export class CadastrarComponent implements OnInit {
 
   cadastrar() {
     if (this.formCadastrar.form.valid) {
-      let conta = new Conta();
-
-      this.clienteService.inserir(this.cliente).subscribe((res) => {
-        // criar conta quando cria cliente
-        Object.entries(res).forEach((res) => {
-          if (res[0] === 'salario') {
-            conta.limite = res[1] / 2;
-          }
-
-          if (res[0] === 'id') {
-            conta.idCliente = res[1];
-            conta.dataCriacao = new Date();
-          }
-        });
-
-        conta.ativo = false;
-        conta.saldo = 0;
-
-        this.contaService.criarConta(conta);
-      });
+      this.clienteService.inserir(this.cliente).subscribe((res) => res);
 
       this.router.navigate(['/login']);
     }

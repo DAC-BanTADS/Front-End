@@ -55,54 +55,6 @@ export class ContaService {
       .pipe(take(1));
   }
 
-  buscarSaquePorId(id: number | undefined) {
-    return this.http
-      .get<Conta>(`${this.url}/saque/${id}`, { headers: this.headers })
-      .pipe(take(1));
-  }
-
-  buscarDepositoPorId(id: number | undefined) {
-    return this.http
-      .get<Conta>(`${this.url}/deposito/${id}`, { headers: this.headers })
-      .pipe(take(1));
-  }
-
-  transferenciaEntreContas(id1: number | undefined, id2: number | undefined) {
-    return this.http
-      .get<Conta>(
-        `${this.url}/transferencia?idOrigem=${id1}&idDestino=${id2}`,
-        { headers: this.headers }
-      )
-      .pipe(take(1));
-  }
-
-  // apagar esse depois de arrumar o autenticacao
-  criarConta(conta: Conta) {
-    // busca o gerente que tem menos clientes
-    this.gerenteService.listarTodos().subscribe((res) => {
-      res = Object.values(res).reduce((a, b) => {
-        if (b.numeroClientes < a.numeroClientes) a = b;
-        return a;
-      });
-
-      // finaliza a inserção dos dados na conta
-      conta.idGerente = res.id;
-
-      // cria a conta do cliente
-      this.inserir(conta).subscribe((res) => res);
-
-      // atualiza o numero de clientes do gerente
-      res.numeroClientes!++;
-      this.gerenteService.alterar(res).subscribe((res) => res);
-    });
-  }
-
-  inserir(conta: Conta) {
-    return this.http
-      .post(this.url, conta, { headers: this.headers })
-      .pipe(take(1));
-  }
-
   alterar(conta: Conta) {
     return this.http
       .put(`${this.url}/${conta.id}`, conta, { headers: this.headers })

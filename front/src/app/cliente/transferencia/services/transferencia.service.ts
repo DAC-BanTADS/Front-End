@@ -18,9 +18,18 @@ export class TransferenciaService {
 
   constructor(private http: HttpClient, private loginService: LoginService) {}
 
-  listarTodos() {
+  listarTodos(
+    idCliente: number | undefined,
+    dataInicial: Date,
+    dataFinal: Date
+  ) {
     return this.http
-      .get<Transacao[]>(this.url, { headers: this.headers })
+      .get<Transacao[]>(
+        this.url + `/${idCliente}/${dataInicial}/${dataFinal}`,
+        {
+          headers: this.headers,
+        }
+      )
       .pipe(tap((res) => res));
   }
 

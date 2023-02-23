@@ -26,9 +26,8 @@ export class DepositarComponent implements OnInit {
     private loginService: LoginService,
     private contaService: ContaService,
     private transferenciaService: TransferenciaService,
-    private router: Router,
     private modalService: NgbModal
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // snapshot.params de ActivatedRoute dá acesso aos parâmetros passados
@@ -37,25 +36,20 @@ export class DepositarComponent implements OnInit {
       .buscarPorEmail(this.loginService.usuarioLogado.email)
       .subscribe((cliente) => {
         if (cliente) {
-          cliente = this.tratarRespostaSubscribe(cliente);
           this.cliente = cliente;
 
-          this.contaService.buscarPorIdCliente(this.cliente.id).subscribe((conta) => {
-            this.conta = this.tratarRespostaSubscribe(conta);
-          })
+          this.contaService
+            .buscarPorIdCliente(this.cliente.id)
+            .subscribe((conta) => {
+              this.conta = conta;
+            });
         } else {
-          throw new Error('Cliente não encontrado: email = '
-            + this.loginService.usuarioLogado.email);
+          throw new Error(
+            'Cliente não encontrado: email = ' +
+              this.loginService.usuarioLogado.email
+          );
         }
       });
-  }
-
-  tratarRespostaSubscribe(res: any) {
-    res = Object.values(res).reduce((a, b) => {
-      return a;
-    });
-
-    return res;
   }
 
   abrirModal() {
@@ -70,18 +64,18 @@ export class DepositarComponent implements OnInit {
       this.contaService.alterar(this.conta).subscribe((res) => res);
 
       this.transacao.idCliente = this.cliente.id;
-      this.transacao.tipoTransacao = "Depósito";
+      this.transacao.tipoTransacao = 'Depósito';
       this.transacao.saldo = this.conta.saldo;
       this.transacao.data = new Date().getTime();
       this.transacao.idClienteDestinatario = this.cliente.id;
-      this.transacao.color = 'table-info'
-      
+      this.transacao.color = 'table-info';
+
       this.transferenciaService.inserir(this.transacao).subscribe((res) => res);
 
       this.abrirModal();
       //this.router.navigate(['/cliente/home']);
     } else {
-      this.mensagem = "Ocorreu um erro ao realizar o depósito.";
+      this.mensagem = 'Ocorreu um erro ao realizar o depósito.';
     }
   }
 }
