@@ -4,7 +4,6 @@ import { AdminDashComponent } from './admin-dash/admin-dash.component';
 import { ClienteDashComponent } from './cliente-dash/cliente-dash.component';
 import { InserirGerenteComponent } from './inserir-gerente/inserir-gerente.component';
 import { EditarGerenteComponent } from './editar-gerente/editar-gerente.component';
-import { RelatorioClientesComponent } from './relatorio-clientes/relatorio-clientes.component';
 
 export const AdminRoutes: Routes = [
   {
@@ -23,7 +22,7 @@ export const AdminRoutes: Routes = [
     pathMatch: 'full',
     data: {
       expectedRole: 'ADMIN',
-    }
+    },
   },
   {
     path: 'admin/gerentes/novo',
@@ -32,7 +31,7 @@ export const AdminRoutes: Routes = [
     pathMatch: 'full',
     data: {
       expectedRole: 'ADMIN',
-    }
+    },
   },
   {
     path: 'admin/gerentes/editar/:id',
@@ -41,15 +40,6 @@ export const AdminRoutes: Routes = [
     pathMatch: 'full',
     data: {
       expectedRole: 'ADMIN',
-    }
+    },
   },
-  {
-    path: 'admin/relatorio-clientes',
-    component: RelatorioClientesComponent,
-    canActivate: [AuthGuard],
-    pathMatch: 'full',
-    data: {
-      expectedRole: 'ADMIN',
-    }
-  }
-]
+];

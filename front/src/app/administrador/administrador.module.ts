@@ -6,17 +6,20 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 
 import { CommonModule } from '@angular/common';
-import { NgbPaginationModule, NgbTypeaheadModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbPaginationModule,
+  NgbTypeaheadModule,
+  NgbAccordionModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from './services/admin.service';
 import { ContaService } from '../conta/services/conta.service';
 import { ClienteService } from '../cliente';
 import { InserirGerenteComponent } from './inserir-gerente/inserir-gerente.component';
 import { EditarGerenteComponent } from './editar-gerente/editar-gerente.component';
 
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
-import { CurrencyMaskModule } from "ng2-currency-mask";
-import { RelatorioClientesComponent } from './relatorio-clientes/relatorio-clientes.component';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
   declarations: [
@@ -24,9 +27,18 @@ import { RelatorioClientesComponent } from './relatorio-clientes/relatorio-clien
     ClienteDashComponent,
     InserirGerenteComponent,
     EditarGerenteComponent,
-    RelatorioClientesComponent
   ],
   providers: [AdminService, ClienteService, ContaService],
-  imports: [CommonModule, FormsModule, RouterModule, SharedModule, NgbPaginationModule, NgbTypeaheadModule, NgbAccordionModule,  NgxMaskModule.forRoot(), CurrencyMaskModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    SharedModule,
+    NgbPaginationModule,
+    NgbTypeaheadModule,
+    NgbAccordionModule,
+    NgxMaskModule.forRoot(),
+    CurrencyMaskModule,
+  ],
 })
-export class AdministradorModule { }
+export class AdministradorModule {}
