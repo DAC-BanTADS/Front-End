@@ -33,14 +33,10 @@ export class LoginService {
   }
 
   login(login: Login) {
-    return this.http.post(this.url + "/login", login).pipe(tap((res) => res));
+    return this.http.post(this.url + '/login', login).pipe(tap((res) => res));
   }
 
   logout() {
     delete localStorage[LS_CHAVE];
-  }
-
-  inserir(usuario: Usuario) {
-    return this.http.post(this.url, usuario).pipe(take(1));
   }
 }

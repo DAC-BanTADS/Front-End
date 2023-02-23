@@ -45,10 +45,6 @@ export class ListarTodosComponent implements OnInit {
       this.gerenteService
         .buscarPorEmail(this.loginService.usuarioLogado.email)
         .subscribe((gerente) => {
-          gerente = Object.values(gerente).reduce((a, b) => {
-            return a;
-          });
-
           this.contaService
             .buscarPorIdGerente(gerente.id)
             .subscribe((contas) => {
@@ -64,10 +60,6 @@ export class ListarTodosComponent implements OnInit {
                       this.contaService
                         .buscarPorIdCliente(cliente.id)
                         .subscribe((conta) => {
-                          conta = Object.values(conta).reduce((a, b) => {
-                            return a;
-                          });
-
                           let obj = {
                             cliente: cliente,
                             conta: conta,
@@ -92,24 +84,22 @@ export class ListarTodosComponent implements OnInit {
     this.gerenteService
       .buscarPorEmail(this.loginService.usuarioLogado.email)
       .subscribe((gerente) => {
-        gerente = Object.values(gerente).reduce((a, b) => {
-          return a;
-        });
+        this.contaService
+          .buscarPorIdGerente(gerente.id)
+          .subscribe((contas: any) => {
+            contas.map((conta: any) => {
+              this.clienteService
+                .buscarPorId(conta.idCliente)
+                .subscribe((cliente) => {
+                  let obj = {
+                    cliente: cliente,
+                    conta: conta,
+                  };
 
-        this.contaService.buscarPorIdGerente(gerente.id).subscribe((contas: any) => {
-          contas.map((conta: any) => {
-            this.clienteService
-              .buscarPorId(conta.idCliente)
-              .subscribe((cliente) => {
-                let obj = {
-                  cliente: cliente,
-                  conta: conta,
-                };
-
-                this.data.push(obj);
-              });
+                  this.data.push(obj);
+                });
+            });
           });
-        });
       });
   }
 

@@ -15,24 +15,12 @@ export class ModalRejeitarComponent implements OnInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private clienteService: ClienteService,
-    private contaService: ContaService,
-    private gerenteService: GerenteService
+    private clienteService: ClienteService
   ) {}
 
   ngOnInit(): void {}
 
   rejeitar() {
-    // deletar a conta
-    this.contaService.buscarPorIdCliente(this.cliente.id).subscribe((res) => {
-      this.gerenteService.buscarPorId(res.idGerente).subscribe((res) => {
-        res.numeroClientes!--;
-        this.gerenteService.alterar(res).subscribe((res) => res);
-      });
-
-      this.contaService.remover(res.id).subscribe((res) => res);
-    });
-
     // deletar o cliente
     this.clienteService.remover(this.cliente.id).subscribe((res) => res);
 

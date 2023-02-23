@@ -32,66 +32,11 @@ export class AdminService {
   ) {}
 
   inserirGerente(gerente: Gerente): void {
-    this.gerenteService.listarTodos().subscribe({
-      next: (data) => {
-        const gerentes = Object.values(data);
-
-        gerente.numeroClientes = 0;
-
-        let usuario: Usuario = {
-          cargo: 'GERENTE',
-          email: gerente.email,
-          nome: gerente.nome,
-          senha: gerente.senha,
-        };
-
-        this.http
-          .post('http://localhost:3000/users', usuario, {
-            headers: this.headers,
-          })
-          .subscribe(() => {
-            this.http
-              .post(this.gerenteHost, gerente, { headers: this.headers })
-              .subscribe({
-                next: (data) => {
-                  console.log('gerente inserido: ', data);
-                  window.location.replace('/admin');
-                },
-                error: (error) => {
-                  console.error('error inserir gerente: ', error);
-                },
-              });
-          });
-      },
-      error(err) {
-        console.log('error gerenteService.listarTodos()');
-      },
-    });
+    this.gerenteService.inserir(gerente).subscribe((res) => res);
   }
 
   removerGerente(gerente: Gerente): void {
-    const { id, email } = gerente;
-
-    this.http
-      .delete(`${this.gerenteHost}/${id}`, { headers: this.headers })
-      .subscribe((data) => {
-        this.http
-          .get<Usuario[]>(this.userHost, { headers: this.headers })
-          .subscribe((users) => {
-            const user = users.find(
-              (user) => user.cargo === 'GERENTE' && user.email === email
-            );
-            if (user) {
-              this.http
-                .delete(`${this.userHost}/${user.id}`, {
-                  headers: this.headers,
-                })
-                .subscribe(() => {
-                  window.location.replace('/admin');
-                });
-            }
-          });
-      });
+    this.gerenteService.remover(gerente.id).subscribe((res) => res);
   }
 
   listarGerentes(): Observable<GerenteDashDto[]> {
@@ -140,27 +85,22 @@ export class AdminService {
 
     clienteObs.subscribe((clientes) => {
       clientes.forEach((cliente) => {
-        this.contaService
-          .buscarPorIdCliente(cliente.id)
-          .subscribe((contaRes) => {
-            const conta: Conta = Object.values(contaRes).reduce(
-              (value) => value
-            );
-            this.gerenteService
-              .buscarPorId(conta.idGerente)
-              .subscribe((gerente) => {
-                const clienteDash: ClienteDashDto = {
-                  id: cliente.id,
-                  nome: cliente.nome,
-                  cpf: cliente.cpf,
-                  limite: conta.limite,
-                  saldo: conta.saldo,
-                  gerente: gerente.nome,
-                };
+        this.contaService.buscarPorIdCliente(cliente.id).subscribe((conta) => {
+          this.gerenteService
+            .buscarPorId(conta.idGerente)
+            .subscribe((gerente) => {
+              const clienteDash: ClienteDashDto = {
+                id: cliente.id,
+                nome: cliente.nome,
+                cpf: cliente.cpf,
+                limite: conta.limite,
+                saldo: conta.saldo,
+                gerente: gerente.nome,
+              };
 
-                res.push(clienteDash);
-              });
-          });
+              res.push(clienteDash);
+            });
+        });
       });
     });
 
@@ -168,9 +108,7 @@ export class AdminService {
   }
 
   getClienteData() {
-    return this.http.get(`${this.urlCliente}/cliente`, {
-      headers: this.headers,
-    });
+    return this.clienteService.listarTodos();
   }
 
   getContaData() {

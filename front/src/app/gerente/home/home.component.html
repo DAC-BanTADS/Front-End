@@ -9,21 +9,31 @@
           <th>Salário</th>
           <th class="text-center">Ação</th>
         </tr>
-        <tr *ngFor="let item of clienteData.content">
-          <td>{{ item.cpf! | cpf }}</td>
-          <td>{{ item.nome }}</td>
-          <td>{{ item.salario | currency }}</td>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.cpf! | cpf }}</td>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.salario | currency }}</td>
           <td class="text-center" style="width: 300px">
-            <a href="#" title="Aprovar" alt="Aprovar" class="btn btn-xs btn-success me-3" (click)="aprovar($event, clienteData.content)">
+            <a
+              href="#"
+              title="Aprovar"
+              alt="Aprovar"
+              class="btn btn-xs btn-success me-3"
+              (click)="aprovar($event, cliente)"
+            >
               <i class="fa fa-times" aria-hidden="true"></i> Aprovar
             </a>
-            <button type="button" class="btn btn-xs btn-info" (click)="abrirModalRejeitar(clienteData.content)">
+            <button
+              type="button"
+              class="btn btn-xs btn-info"
+              (click)="abrirModalRejeitar(cliente)"
+            >
               <i class="fa fa-eye" aria-hidden="true"></i> Rejeitar
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <p *ngIf="clienteData.content.length == 0">Nenhum cliente cadastrado.</p>
+    <p *ngIf="clientes.length == 0">Nenhum cliente cadastrado.</p>
   </div>
 </div>

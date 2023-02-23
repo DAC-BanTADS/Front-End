@@ -15,11 +15,7 @@ export class ContaService {
     this.loginService.token
   );
 
-  constructor(
-    private gerenteService: GerenteService,
-    private http: HttpClient,
-    private loginService: LoginService
-  ) {}
+  constructor(private http: HttpClient, private loginService: LoginService) {}
 
   buscarPorIdCliente(id: number | undefined) {
     return this.http

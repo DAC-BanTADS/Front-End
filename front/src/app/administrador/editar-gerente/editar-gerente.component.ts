@@ -8,24 +8,29 @@ import { GerenteService } from 'src/app/gerente/services';
 @Component({
   selector: 'app-editar-gerente',
   templateUrl: './editar-gerente.component.html',
-  styleUrls: ['./editar-gerente.component.scss']
+  styleUrls: ['./editar-gerente.component.scss'],
 })
 export class EditarGerenteComponent implements OnInit {
-  @ViewChild('gerenteForm') gerenteForm!: NgForm
-  gerente!: Gerente
+  @ViewChild('gerenteForm') gerenteForm!: NgForm;
+  gerente!: Gerente;
 
-  constructor(private gerenteService: GerenteService, public activatedRoute: ActivatedRoute) { }
+  constructor(
+    private gerenteService: GerenteService,
+    public activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit (): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id')
-    this.gerenteService.buscarPorId(Number(id)).subscribe(gerente => this.gerente = gerente)
+  ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.gerenteService.buscarPorId(id).subscribe((gerente) => {
+      this.gerente = gerente;
+    });
   }
 
-  atualizar () {
+  atualizar() {
     if (this.gerenteForm.form.valid) {
-      this.gerenteService.alterar(this.gerente).subscribe(res => {
-        window.location.replace('/admin')
-      })
+      this.gerenteService.alterar(this.gerente).subscribe((res) => {
+        window.location.replace('/admin');
+      });
     }
   }
 }

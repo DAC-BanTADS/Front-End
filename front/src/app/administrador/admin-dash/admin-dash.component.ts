@@ -10,7 +10,6 @@ import { Gerente } from 'src/app/shared';
   styleUrls: ['./admin-dash.component.scss'],
 })
 export class AdminDashComponent implements OnInit {
-
   page = 1;
   pageSize = 15;
   data!: GerenteDashDto[];
@@ -19,16 +18,15 @@ export class AdminDashComponent implements OnInit {
   constructor(private service: AdminService, public router: Router) {}
 
   ngOnInit() {
-		this.refreshData();
+    this.refreshData();
   }
 
-	refreshData() {
-		this.data = []
-    this.service.listarGerentes().subscribe(res => this.data = res)
-	}
+  refreshData() {
+    this.data = [];
+    this.service.listarGerentes().subscribe((res) => (this.data = res));
+  }
 
   removerGerente(gerente: Gerente) {
-    this.service.removerGerente(gerente)
+    this.service.removerGerente(gerente);
   }
-
 }

@@ -14,7 +14,6 @@ import { GerenteService } from '../services';
 })
 export class HomeComponent implements OnInit {
   clientes: Cliente[] = [];
-  public clienteData: any;
 
   constructor(
     private clienteService: ClienteService,
@@ -25,18 +24,18 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.gerenteService.getClienteData().subscribe((res: any) => {
-      this.clienteData = res;
-    });
-
     this.gerenteService
       .buscarPorEmail(this.loginService.usuarioLogado.email)
       .subscribe((res) => {
         this.contaService.buscarPorIdGerente(res.id).subscribe((res) => {
           res.map((res) => {
-            this.clienteService.buscarPorId(res.idCliente).subscribe((res) => {
-              this.clientes.push(res);
-            });
+            if (!res.ativo) {
+              this.clienteService
+                .buscarPorId(res.idCliente)
+                .subscribe((res) => {
+                  this.clientes.push(res);
+                });
+            }
           });
         });
       });
@@ -46,24 +45,10 @@ export class HomeComponent implements OnInit {
     $event.preventDefault();
 
     if (confirm(`Deseja realmente aprovar o(a) cliente ${cliente.nome}?`)) {
-      const usuario = new Usuario();
-
-      usuario.nome = cliente.nome;
-      usuario.email = cliente.email;
-      usuario.senha = String(new Date().getTime());
-      usuario.cargo = 'CLIENTE';
-
-      this.loginService.inserir(usuario).subscribe((res) => res);
-
       this.contaService.buscarPorIdCliente(cliente.id).subscribe((res) => {
         res.ativo = true;
 
         this.contaService.alterar(res).subscribe((res) => res);
-
-        this.gerenteService.buscarPorId(res.idGerente).subscribe((res) => {
-          res.numeroClientes!--;
-          this.gerenteService.alterar(res).subscribe((res) => res);
-        });
       });
     }
   }

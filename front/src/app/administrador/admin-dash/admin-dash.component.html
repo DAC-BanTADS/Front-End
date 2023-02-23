@@ -13,8 +13,13 @@
           <th scope="col">Total Saldo (-)</th>
           <th scope="col"></th>
           <th scope="col">
-            <button (click)="router.navigate(['/admin/gerentes/novo'])" type="button" class="btn btn-success">Novo
-              Gerente</button>
+            <button
+              (click)="router.navigate(['/admin/gerentes/novo'])"
+              type="button"
+              class="btn btn-success"
+            >
+              Novo Gerente
+            </button>
           </th>
         </tr>
       </thead>
@@ -25,24 +30,40 @@
           <td>{{ dto.gerente.cpf }}</td>
           <td>{{ dto.gerente.telefone! | phone }}</td>
           <td>{{ dto.totalClientes }}</td>
-          <td>{{ dto.totalSaldoPositivo | currency: 'R$ ' }}</td>
-          <td>{{ dto.totalSaldoNegativo | currency: '- R$ '}}</td>
+          <td>{{ dto.totalSaldoPositivo | currency : "R$ " }}</td>
+          <td>{{ dto.totalSaldoNegativo | currency : "- R$ " }}</td>
           <td>
-            <button (click)="router.navigate(['/admin/gerentes/editar/'+dto.gerente.id])" type="button"
-              class="btn btn-warning">Editar</button>
+            <button
+              (click)="
+                router.navigate(['/admin/gerentes/editar/' + dto.gerente.id])
+              "
+              type="button"
+              class="btn btn-warning"
+            >
+              Editar
+            </button>
           </td>
           <td>
-            <button (click)="removerGerente(dto.gerente)" type="button" class="btn btn-danger">Remover</button>
+            <button
+              (click)="removerGerente(dto.gerente)"
+              type="button"
+              class="btn btn-danger"
+            >
+              Remover
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
     <div class="d-flex justify-content-center p-2">
-      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-        (pageChange)="refreshData()">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        (pageChange)="refreshData()"
+      >
       </ngb-pagination>
-
     </div>
   </div>
 </div>

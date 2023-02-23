@@ -24,7 +24,7 @@ export class GerenteService {
   // excluir pois ja existe o metodo no servico da conta
   getMelhores(gerente: Gerente) {
     return this.http
-      .put(`${this.url}/conta/melhores/${gerente.id}`, gerente, {
+      .get(`${this.url}/conta/melhores/${gerente.id}`, {
         headers: this.headers,
       })
       .pipe(take(1));
@@ -36,7 +36,7 @@ export class GerenteService {
       .pipe(tap((res) => res));
   }
 
-  buscarPorId(id: number | undefined) {
+  buscarPorId(id: any) {
     return this.http
       .get<Gerente>(`${this.url}/${id}`, { headers: this.headers })
       .pipe(take(1));
