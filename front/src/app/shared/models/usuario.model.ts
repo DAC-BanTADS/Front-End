@@ -4,8 +4,6 @@ export class Usuario {
     public nome?: string,
     public email?: string,
     public senha?: string,
-    public cargo?: string,
-    public idCliente?: number,
-    public idConta?: number
+    public cargo?: string
   ) {}
 }

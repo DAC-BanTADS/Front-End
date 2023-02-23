@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Login } from 'src/app/shared';
+import { Login, Usuario } from 'src/app/shared';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -31,19 +31,25 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     if (this.formLogin.form.valid) {
       this.loginService.login(this.login).subscribe((login) => {
-        /*if (login.auth == true) {
-          this.loginService.usuarioLogado = usuario;
+        let auth: boolean = Object.entries(login)[0][1];
+        let token: any = Object.entries(login)[1][1];
+
+        if (auth) {
+          let response: any = Object.entries(login)[2][1];
+          const user: Usuario = response;
+
+          this.loginService.usuarioLogado = user;
           this.loading = false;
-          this.navegarParaAHome(usuario.cargo);
-        } else if (login.auth == false) {
-          this.message = login.massage;
-        }*/
+          this.navegarParaAHome(user.cargo);
+        } else {
+          this.message = token;
+        }
       });
     }
     this.loading = false;
   }
 
-  public navegarParaAHome(cargo: string) {
+  public navegarParaAHome(cargo: string | undefined) {
     switch (cargo) {
       case 'ADMIN':
         return this.router.navigate(['/admin']);
